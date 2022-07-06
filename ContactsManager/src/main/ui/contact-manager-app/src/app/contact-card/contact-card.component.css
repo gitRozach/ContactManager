@@ -14,10 +14,12 @@
     filter: drop-shadow(0 0 8px #007bff);
 }
 
-p {
-    color: #d4d3d3;
+.card-title{
+    color: #e4e4e4;
+    font-weight: 600;
 }
 
-h5 {
-    color: #d4d3d3;
+.card-text {
+    color: #cecece;
+    font-weight: 400;
 }
