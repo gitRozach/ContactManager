@@ -10,7 +10,7 @@ export class ContactDeleteFormComponent implements OnInit {
   @Output() onDeleteSubmit = new EventEmitter<boolean>;
   @Input() contactToDelete: Contact | undefined;
 
-  deleteText: string = `Möchten Sie diesen Kontakt endgültig entfernen?`;
+  deleteText: string = 'Möchten Sie diesen Kontakt endgültig entfernen?';
   constructor() { }
 
   ngOnInit(): void {
@@ -19,7 +19,9 @@ export class ContactDeleteFormComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     const change = changes['contactToDelete'];
     if (change) {
-      this.deleteText = `Möchten Sie '${change.currentValue.name}' endgültig als Kontakt entfernen?`;
+      this.deleteText = change.currentValue?.name ? 
+                        `Möchten Sie '${change.currentValue.name}' endgültig als Kontakt entfernen?` :
+                        'Möchten Sie diesen Kontakt endgültig entfernen?';
     }
   }
 

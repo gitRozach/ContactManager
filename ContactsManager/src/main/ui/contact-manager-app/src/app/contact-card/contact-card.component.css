@@ -2,3 +2,22 @@
     display: flex;
     gap: 1rem;
 }
+
+.card {
+    background: rgb(61, 61, 61);
+    color: #d4d3d3;
+    border: 0px solid gray;
+    transition: all .5s ease;
+}
+
+.card:hover {
+    filter: drop-shadow(0 0 8px #007bff);
+}
+
+p {
+    color: #d4d3d3;
+}
+
+h5 {
+    color: #d4d3d3;
+}
