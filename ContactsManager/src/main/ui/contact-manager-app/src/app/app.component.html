@@ -1,0 +1,15 @@
+<div class="appRootContainer">
+  <app-header-bar (onSearchSubmit)="onSearchTextChanged($event)" [teams]="this.teams"></app-header-bar>
+
+  <div class="cardRootContainer">
+    <app-contact-card *ngFor="let contact of contacts | searchPipe:this.searchText"
+      [contact]="contact"
+      (contactToEditChanged)="onContactToEditChanged($event)"
+      (contactToDeleteChanged)="onContactToDeleteChanged($event)"
+    >
+    </app-contact-card>
+    <app-contact-add-form [formId]="'add-contact-form'" (formEvent)="addContact($event)"></app-contact-add-form>
+    <app-contact-delete-form [contactToDelete]="this.contactToDelete" (onDeleteSubmit)="removeContactToDelete($event)"></app-contact-delete-form>
+    <app-contact-edit-form [contactToEdit]="this.contactToEdit" (onEditSubmit)="editContact($event)"></app-contact-edit-form>
+  </div>
+</div>

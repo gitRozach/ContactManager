@@ -1,0 +1,45 @@
+.appRootContainer{
+    width: 100%;
+    height: 100%;
+    overflow-x: wrap;
+    overflow-y: auto;
+}
+
+@media screen and (max-width: 2500px) {
+    .cardRootContainer {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 2.5rem;
+        gap: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .cardRootContainer {
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 2.5rem;
+        gap: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .cardRootContainer {
+        display: grid;
+        grid-template-columns: auto;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 2.5rem;
+        gap: 2.5rem;
+    }
+}

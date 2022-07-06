@@ -1,0 +1,49 @@
+<div class="modal fade" id="edit-contact-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Kontakt bearbeiten</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #editContactForm="ngForm" (ngSubmit)="onEdit(editContactForm)">
+                <div class="form-group">
+                    <label for="inputName">Full name</label>
+                    <input [(ngModel)]="editNameInput" name="ngName" type="text" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Enter the full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTeam">Team name</label>
+                    <input [(ngModel)]="editTeamInput"  name="ngTeam" type="text" class="form-control" id="inputTeam" aria-describedby="teamHelp" placeholder="Enter the team name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle">Job title</label>
+                    <input [(ngModel)]="editTitleInput"  name="ngTitle" type="text" class="form-control" id="inputTitle" aria-describedby="titleHelp" placeholder="Enter the job title" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail">Email address</label>
+                  <input [(ngModel)]="editEmailInput" name="ngEmail" type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter the email address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPhoneNumber">Phone number</label>
+                    <input [(ngModel)]="editPhoneNumberInput" name="ngPhoneNumber" type="text" class="form-control" id="inputPhoneNumber" aria-describedby="phoneNumberHelp" placeholder="Enter the phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputImageUrl">Image URL</label>
+                    <input [(ngModel)]="editImageUrlInput" name="ngImageUrl" type="text" class="form-control" id="inputImageUrl" aria-describedby="imageUrlHelp" placeholder="Enter the image URL" required>
+                </div>
+                
+                <div class="controls">
+                    <button type="button" class="btn btn-primary" (click)="onEdit(editContactForm)" data-dismiss="modal" [disabled]="editContactForm.invalid">Speichern</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+      </div>
+    </div>
+</div>
