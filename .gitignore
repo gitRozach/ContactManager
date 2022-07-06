@@ -129,5 +129,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Angular cache files
+# Angular files
 cache/
+ContactsManager/src/main/api/.idea/vcs.xml
