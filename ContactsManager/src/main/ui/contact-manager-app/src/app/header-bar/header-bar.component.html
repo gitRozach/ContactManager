@@ -11,10 +11,11 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Team
+            {{selectedTeam}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a *ngFor="let team of teams | teamSort:'ASC'" class="dropdown-item" href="">{{team}}</a>
+            <a *ngIf="teams.indexOf(selectedTeam) !== -1" class="dropdown-item" (click)="onTeamSelectionChanged(undefined)">{{'Alle anzeigen'}}</a>
+            <a *ngFor="let team of teams | teamSort:'ASC'" class="dropdown-item" (click)="onTeamSelectionChanged(team)">{{team}}</a>
           </div>
         </li>
       </ul>

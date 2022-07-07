@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import { Team } from '../interface/team';
 
+export const DEFAULT_ALL_TEAMS_NAME = 'Teams';
 @Component({
   selector: 'app-header-bar',
   templateUrl: './header-bar.component.html',
@@ -10,6 +10,8 @@ import { Team } from '../interface/team';
 export class HeaderBarComponent implements OnInit {
   @Input() teams: string[] = [];
   @Output() onSearchSubmit = new EventEmitter<string>;
+  @Output() onTeamChanged = new EventEmitter<string | undefined>;
+  selectedTeam: string = DEFAULT_ALL_TEAMS_NAME;
 
   constructor() { }
 
@@ -23,8 +25,9 @@ export class HeaderBarComponent implements OnInit {
     }
   }
 
-  public trackItem (index: number, item: Team) {
-    return item.id;
+  onTeamSelectionChanged(value: string | undefined) {
+    this.selectedTeam = value ?? DEFAULT_ALL_TEAMS_NAME;
+    this.onTeamChanged.emit(value);
   }
 
   onSearch(searchValue: string): void {

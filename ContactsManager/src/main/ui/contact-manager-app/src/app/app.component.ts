@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   contactToEdit: Contact | undefined = undefined;
   contactToDelete: Contact | undefined = undefined;
   teams: string[] = [];
+  selectedTeam: string | undefined;
   searchText: string = '';
   searchCounter: {count: number} = {count: 0};
   
@@ -104,6 +105,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public onSearchTextChanged(searchValue: string): void {
     this.searchText = searchValue;
+  }
+
+  public onTeamSelectionChanged(selectedTeam: string | undefined): void {
+    this.selectedTeam = selectedTeam;
+    console.log("Selected Team: ", selectedTeam)
   }
 
   public onContactToEditChanged(contact: Contact): void {

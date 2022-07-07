@@ -12,6 +12,7 @@ import { NoDisplayableItemComponent } from './no-displayable-item/no-displayable
 import { ContactSortPipe } from './pipes/contact-sort.pipe';
 import { TeamSortPipe } from './pipes/team-sort.pipe';
 import { ContactSearchPipe } from './pipes/contact-search.pipe';
+import { TeamFilterPipe } from './pipes/team-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ContactSearchPipe } from './pipes/contact-search.pipe';
     ContactSortPipe,
     TeamSortPipe,
     ContactSearchPipe,
+    TeamFilterPipe,
   ],
   imports: [
     BrowserModule,
