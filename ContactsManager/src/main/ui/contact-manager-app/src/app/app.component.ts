@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   contactToDelete: Contact | undefined = undefined;
   teams: string[] = [];
   searchText: string = '';
+  searchCounter: {count: number} = {count: 0};
   
   constructor(private contactService: ContactService) {}
 

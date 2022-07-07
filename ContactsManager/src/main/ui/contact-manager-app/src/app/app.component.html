@@ -2,12 +2,14 @@
   <app-header-bar (onSearchSubmit)="onSearchTextChanged($event)" [teams]="this.teams"></app-header-bar>
 
   <div class="cardRootContainer">
-    <app-contact-card *ngFor="let contact of contacts | searchPipe:this.searchText | sortPipe:'ASC'"
+    <app-contact-card *ngFor="let contact of contacts | searchPipe:this.searchText:this.searchCounter | sortPipe:'ASC'"
       [contact]="contact"
       (contactToEditChanged)="onContactToEditChanged($event)"
       (contactToDeleteChanged)="onContactToDeleteChanged($event)"
     >
     </app-contact-card>
+    <app-no-displayable-item *ngIf="!searchText && (!contacts || contacts.length === 0)" text="Sie haben noch keine Kontakte. Fügen Sie welche hinzu."></app-no-displayable-item>
+    <app-no-displayable-item *ngIf="contacts && searchText.length > 0 && this.searchCounter.count === 0" text="Es konnte kein passender Kontakt gefunden werden."></app-no-displayable-item>
     <app-contact-add-form [formId]="'add-contact-form'" (formEvent)="addContact($event)"></app-contact-add-form>
     <app-contact-delete-form [contactToDelete]="this.contactToDelete" (onDeleteSubmit)="removeContactToDelete($event)"></app-contact-delete-form>
     <app-contact-edit-form [contactToEdit]="this.contactToEdit" (onEditSubmit)="editContact($event)"></app-contact-edit-form>

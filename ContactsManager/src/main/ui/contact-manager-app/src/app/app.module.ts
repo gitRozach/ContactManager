@@ -10,6 +10,7 @@ import { ContactDeleteFormComponent } from './contact-delete-form/contact-delete
 import { ContactEditFormComponent } from './contact-edit-form/contact-edit-form.component';
 import { SearchPipePipe } from './search-pipe.pipe';
 import { SortPipePipe } from './sort-pipe.pipe';
+import { NoDisplayableItemComponent } from './no-displayable-item/no-displayable-item.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SortPipePipe } from './sort-pipe.pipe';
     ContactEditFormComponent,
     SearchPipePipe,
     SortPipePipe,
+    NoDisplayableItemComponent,
   ],
   imports: [
     BrowserModule,
