@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactDeleteFormComponent } from './contact-delete-form/contact-delete-form.component';
 import { ContactEditFormComponent } from './contact-edit-form/contact-edit-form.component';
 import { SearchPipePipe } from './search-pipe.pipe';
+import { SortPipePipe } from './sort-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SearchPipePipe } from './search-pipe.pipe';
     ContactDeleteFormComponent,
     ContactEditFormComponent,
     SearchPipePipe,
+    SortPipePipe,
   ],
   imports: [
     BrowserModule,

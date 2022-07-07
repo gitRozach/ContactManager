@@ -2,7 +2,7 @@
   <app-header-bar (onSearchSubmit)="onSearchTextChanged($event)" [teams]="this.teams"></app-header-bar>
 
   <div class="cardRootContainer">
-    <app-contact-card *ngFor="let contact of contacts | searchPipe:this.searchText"
+    <app-contact-card *ngFor="let contact of contacts | searchPipe:this.searchText | sortPipe:'ASC'"
       [contact]="contact"
       (contactToEditChanged)="onContactToEditChanged($event)"
       (contactToDeleteChanged)="onContactToDeleteChanged($event)"
