@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 
-export const DEFAULT_ALL_TEAMS_NAME = 'Teams';
+export const DEFAULT_ALL_TEAMS_NAME = 'Alle Teams';
 @Component({
   selector: 'app-header-bar',
   templateUrl: './header-bar.component.html',
