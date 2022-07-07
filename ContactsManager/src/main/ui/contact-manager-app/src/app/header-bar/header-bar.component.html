@@ -14,8 +14,8 @@
             {{selectedTeam}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a *ngIf="teams.indexOf(selectedTeam) !== -1" class="dropdown-item" (click)="onTeamSelectionChanged(undefined)">{{'Alle anzeigen'}}</a>
-            <a *ngFor="let team of teams | teamSort:'ASC'" class="dropdown-item" (click)="onTeamSelectionChanged(team)">{{team}}</a>
+            <a *ngIf="teams.indexOf(selectedTeam) !== -1" class="dropdown-item" (click)="onTeamSelectionChanged(undefined)"><b>{{'Alle anzeigen'}}</b></a>
+            <a *ngFor="let team of teams | teamSort: 'ASC'" class="dropdown-item" (click)="onTeamSelectionChanged(team)">{{team}}</a>
           </div>
         </li>
       </ul>
