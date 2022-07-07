@@ -13,8 +13,8 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Team
           </a>
-          <div *ngFor="let team of teams" class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="">{{team}}</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a *ngFor="let team of teams | teamSort:'ASC'" class="dropdown-item" href="">{{team}}</a>
           </div>
         </li>
       </ul>

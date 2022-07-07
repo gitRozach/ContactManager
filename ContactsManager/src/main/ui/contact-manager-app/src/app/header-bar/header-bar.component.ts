@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Team } from '../interface/team';
 
 @Component({
   selector: 'app-header-bar',
   templateUrl: './header-bar.component.html',
-  styleUrls: ['./header-bar.component.css']
+  styleUrls: ['./header-bar.component.css'],
+  
 })
 export class HeaderBarComponent implements OnInit {
   @Input() teams: string[] = [];
@@ -12,6 +14,17 @@ export class HeaderBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const change = changes['teams'];
+    if (change) {
+      console.log('Updated teams:', this.teams);
+    }
+  }
+
+  public trackItem (index: number, item: Team) {
+    return item.id;
   }
 
   onSearch(searchValue: string): void {

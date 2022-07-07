@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Contact } from './contact';
-import { ContactService } from './contact.service';
+import { Subscription } from 'rxjs';
+import { Contact } from './interface/contact';
+import { ContactService } from './service/contact.service';
+import { Team } from './interface/team';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title: string = 'Contact Manager';
   contacts: Contact[] = [];
+  contactSubscription: Subscription | undefined;
   contactToEdit: Contact | undefined = undefined;
   contactToDelete: Contact | undefined = undefined;
   teams: string[] = [];
@@ -23,15 +27,13 @@ export class AppComponent implements OnInit {
     this.pullContacts();
   }
 
+  ngAfterViewInit(): void {
+    this.teams = this.findAllTeams(this.contacts);
+  }
+
   private findAllTeams(contacts: Contact[]): string[] {
     if(!contacts) return [];
-    const resultList: string[] = [];
-    for(let contact of contacts) {
-      if(resultList.indexOf(contact.team) === -1) {
-        resultList.push(contact.team);
-      }
-    }
-    return resultList;
+    return [...new Set(contacts.map(item => item.team))];
   }
 
   public addContact(addContactForm: NgForm): void {

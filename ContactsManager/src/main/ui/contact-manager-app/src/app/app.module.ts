@@ -8,9 +8,10 @@ import { ContactAddFormComponent } from './contact-add-form/contact-add-form.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactDeleteFormComponent } from './contact-delete-form/contact-delete-form.component';
 import { ContactEditFormComponent } from './contact-edit-form/contact-edit-form.component';
-import { SearchPipePipe } from './search-pipe.pipe';
-import { SortPipePipe } from './sort-pipe.pipe';
 import { NoDisplayableItemComponent } from './no-displayable-item/no-displayable-item.component';
+import { ContactSortPipe } from './pipes/contact-sort.pipe';
+import { TeamSortPipe } from './pipes/team-sort.pipe';
+import { ContactSearchPipe } from './pipes/contact-search.pipe';
 
 @NgModule({
   declarations: [
@@ -20,9 +21,10 @@ import { NoDisplayableItemComponent } from './no-displayable-item/no-displayable
     ContactAddFormComponent,
     ContactDeleteFormComponent,
     ContactEditFormComponent,
-    SearchPipePipe,
-    SortPipePipe,
     NoDisplayableItemComponent,
+    ContactSortPipe,
+    TeamSortPipe,
+    ContactSearchPipe,
   ],
   imports: [
     BrowserModule,

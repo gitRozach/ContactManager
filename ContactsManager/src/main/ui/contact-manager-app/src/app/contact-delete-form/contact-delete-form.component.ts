@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Contact } from '../contact';
+import { Contact } from '../interface/contact';
 
 @Component({
   selector: 'app-contact-delete-form',

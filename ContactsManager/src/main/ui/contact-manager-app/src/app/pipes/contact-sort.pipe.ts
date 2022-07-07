@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Contact } from './contact';
+import { Contact } from '../interface/contact';
 
 @Pipe({
-  name: 'sortPipe'
+  name: 'contactSort'
 })
-export class SortPipePipe implements PipeTransform {
+export class ContactSortPipe implements PipeTransform {
 
   transform(items: Contact[], value: 'ASC' | 'DESC'): Contact[] {
     if(!items || !value) return items;
@@ -12,5 +12,4 @@ export class SortPipePipe implements PipeTransform {
     if(value === 'DESC') return items.sort((a, b) => a.name > b.name ? -1 : (a.name < b.name ? 1 : 0))
     return items;
   }
-
 }

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Contact } from '../contact';
+import { Contact } from '../interface/contact';
 
 @Component({
   selector: 'app-contact-card',

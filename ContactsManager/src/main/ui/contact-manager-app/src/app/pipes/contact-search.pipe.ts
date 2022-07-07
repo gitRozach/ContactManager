@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Contact } from './contact';
+import { Contact } from '../interface/contact';
 
 @Pipe({
-  name: 'searchPipe'
+  name: 'contactSearch'
 })
-export class SearchPipePipe implements PipeTransform {
+export class ContactSearchPipe implements PipeTransform {
 
   transform(items: Contact[], value: string, searchCounter: {count: number}): Contact[] {
     if(!items || !value) return items;
@@ -16,5 +16,4 @@ export class SearchPipePipe implements PipeTransform {
     searchCounter.count = result.length;
     return result;
   }
-
 }
