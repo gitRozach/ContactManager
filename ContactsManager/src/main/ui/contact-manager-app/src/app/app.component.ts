@@ -12,6 +12,7 @@ import { Team } from './interface/team';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  loading: boolean = true;
   title: string = 'Contact Manager';
   contacts: Contact[] = [];
   contactSubscription: Subscription | undefined;
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.teams = this.findAllTeams(this.contacts);
+    setTimeout(() => this.loading = false, 4000);
   }
 
   private findAllTeams(contacts: Contact[]): string[] {

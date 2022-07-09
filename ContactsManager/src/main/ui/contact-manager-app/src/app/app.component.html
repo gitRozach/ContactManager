@@ -1,4 +1,6 @@
 <div class="appRootContainer">
+  <app-loading-layer [loading]="loading"></app-loading-layer>
+
   <app-header-bar 
     (onSearchSubmit)="onSearchTextChanged($event)"
     (onTeamChanged)="onTeamSelectionChanged($event)" 

@@ -13,6 +13,8 @@ import { ContactSortPipe } from './pipes/contact-sort.pipe';
 import { TeamSortPipe } from './pipes/team-sort.pipe';
 import { ContactSearchPipe } from './pipes/contact-search.pipe';
 import { TeamFilterPipe } from './pipes/team-filter.pipe';
+import { LoadingLayerComponent } from './loading-layer/loading-layer.component';
+
 
 @NgModule({
   declarations: [
@@ -27,12 +29,14 @@ import { TeamFilterPipe } from './pipes/team-filter.pipe';
     TeamSortPipe,
     ContactSearchPipe,
     TeamFilterPipe,
+    LoadingLayerComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   providers: [ContactAddFormComponent],
   bootstrap: [AppComponent]
