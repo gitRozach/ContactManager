@@ -1,9 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { Contact } from './interface/contact';
 import { ContactService } from './service/contact.service';
-import { Team } from './interface/team';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +13,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   loading: boolean = true;
   title: string = 'Contact Manager';
   contacts: Contact[] = [];
-  contactSubscription: Subscription | undefined;
   contactToEdit: Contact | undefined = undefined;
   contactToDelete: Contact | undefined = undefined;
+  selectedContact: Contact | undefined = undefined;
   teams: string[] = [];
   selectedTeam: string | undefined;
   searchText: string = '';
@@ -25,13 +23,18 @@ export class AppComponent implements OnInit, AfterViewInit {
   
   constructor(private contactService: ContactService) {}
 
+  @HostListener('document:keydown.esc', ['$event']) 
+  onKeydownHandler(_: KeyboardEvent) {
+    this.onSelectedContactChanged(undefined);
+  }
+
   ngOnInit(): void {
     this.pullContacts();
   }
 
   ngAfterViewInit(): void {
     this.teams = this.findAllTeams(this.contacts);
-    setTimeout(() => this.loading = false, 4000);
+    setTimeout(() => this.loading = false, 2000);
   }
 
   private findAllTeams(contacts: Contact[]): string[] {
@@ -106,22 +109,36 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   public onSearchTextChanged(searchValue: string): void {
+    if(this.searchText === searchValue) return;
     this.searchText = searchValue;
   }
 
   public onTeamSelectionChanged(selectedTeam: string | undefined): void {
+    if (this.selectedTeam === selectedTeam) return;
     this.selectedTeam = selectedTeam;
-    console.log("Selected Team: ", selectedTeam)
+    console.log("Selected Team: ", this.selectedTeam)
   }
 
   public onContactToEditChanged(contact: Contact): void {
+    if (this.contactToEdit === contact) return;
     this.contactToEdit = contact;
-    console.log("Contact to edit: ", contact?.id)
+    console.log("Contact to edit: ", this.contactToEdit?.id);
   }
 
   public onContactToDeleteChanged(contact: Contact): void {
+    if (this.contactToDelete === contact) return;
     this.contactToDelete = contact;
-    console.log("Contact to delete: ", contact?.id)
+    console.log("Contact to delete: ", this.contactToDelete?.id);
+  }
+
+  public onSelectedContactChanged(contact: Contact | undefined): void {
+    if (this.selectedContact === contact) {
+      this.selectedContact = undefined;
+      console.log("Contact selection reset.");
+      return;
+    };
+    this.selectedContact = contact;
+    console.log("Contact selected: ", this.selectedContact?.id);
   }
 
   public pullContacts(): void {

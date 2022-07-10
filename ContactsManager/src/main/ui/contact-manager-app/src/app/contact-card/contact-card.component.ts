@@ -14,31 +14,39 @@ export class ContactCardComponent implements OnInit {
 
   @Output() contactToEditChanged = new EventEmitter<Contact>;
   @Output() contactToDeleteChanged = new EventEmitter<Contact>;
+  @Output() selectedContactChanged = new EventEmitter<Contact>;
 
   constructor() { }
 
   ngOnInit(): void {}
 
-  public openModal(mode: 'edit' | 'delete'): void {
+  public openEditModal(): void {
+    console.log('Submitting ID to edit: ', this.contact.id)
+    this.contactToEditChanged.emit(this.contact);
     const container = document.getElementById('card-controls');
-
-    const example = document.getElementById('inputName');
-    example?.setAttribute("value", "test1232222");
-
     const button = document.createElement('button');
     button.type = 'button';
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
-    if (mode === 'edit') {
-      this.contactToEditChanged.emit(this.contact);
-      button.setAttribute('data-target', '#edit-contact-form');
-    }
-    if (mode === 'delete') {
-      this.contactToDeleteChanged.emit(this.contact);
-      console.log('Submitting ID to delete: ', this.contact.id)
-      button.setAttribute('data-target', '#delete-contact-form');
-    }
+    button.setAttribute('data-target', '#edit-contact-form');
     container!.appendChild(button);
     button.click();
+  }
+
+  public openDeleteModal(): void {
+    console.log('Submitting ID to delete: ', this.contact.id)
+    this.contactToDeleteChanged.emit(this.contact);
+    const container = document.getElementById('card-controls');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+    button.setAttribute('data-target', '#delete-contact-form');
+    container!.appendChild(button);
+    button.click();
+  }
+
+  public selectContact(): void {
+    this.selectedContactChanged.emit(this.contact);
   }
 }

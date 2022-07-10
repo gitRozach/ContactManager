@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Contact } from '../interface/contact';
 
 export const DEFAULT_ALL_TEAMS_NAME = 'Alle Teams';
 @Component({
@@ -9,6 +10,7 @@ export const DEFAULT_ALL_TEAMS_NAME = 'Alle Teams';
 })
 export class HeaderBarComponent implements OnInit {
   @Input() teams: string[] = [];
+  @Input() selectedContact: Contact | undefined;
   @Output() onSearchSubmit = new EventEmitter<string>;
   @Output() onTeamChanged = new EventEmitter<string | undefined>;
   selectedTeam: string = DEFAULT_ALL_TEAMS_NAME;
@@ -16,13 +18,6 @@ export class HeaderBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const change = changes['teams'];
-    if (change) {
-      console.log('Updated teams:', this.teams);
-    }
   }
 
   onTeamSelectionChanged(value: string | undefined) {

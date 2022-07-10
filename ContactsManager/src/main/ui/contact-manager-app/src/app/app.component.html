@@ -3,13 +3,15 @@
 
   <app-header-bar 
     (onSearchSubmit)="onSearchTextChanged($event)"
-    (onTeamChanged)="onTeamSelectionChanged($event)" 
+    (onTeamChanged)="onTeamSelectionChanged($event)"
+    [selectedContact]="this.selectedContact" 
     [teams]="this.teams">
   </app-header-bar>
 
   <div class="cardRootContainer">
     <app-contact-card *ngFor="let contact of contacts | teamFilter:this.selectedTeam ?? '' | contactSearch:this.searchText:this.searchCounter | contactSort:'ASC'"
       [contact]="contact"
+      (selectedContactChanged)="onSelectedContactChanged($event)"
       (contactToEditChanged)="onContactToEditChanged($event)"
       (contactToDeleteChanged)="onContactToDeleteChanged($event)"
     >

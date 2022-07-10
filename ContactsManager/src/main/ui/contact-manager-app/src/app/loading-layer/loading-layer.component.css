@@ -13,8 +13,8 @@
 
 .loading-circle {
     position: absolute;
-    width: 11rem;
-    height: 11rem;
+    width: 9rem;
+    height: 9rem;
     border-radius: 50%;
     animation: rotate-circle 2s linear infinite;
 }
@@ -33,8 +33,8 @@
 
 .loading-text {
     color: rgba(255, 255, 255, 0.9);
-    line-height: 11rem;
-    font-size: 2.125rem;
+    line-height: 9rem;
+    font-size: 3rem;
     letter-spacing: 0.125rem;
     text-transform: uppercase;
     animation: blink-text 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
@@ -58,14 +58,14 @@
 @keyframes rotate-circle {
     0%{
         transform: rotate(0deg);
-        box-shadow: 1px 5px 2px #E65C00;
+        box-shadow: 1px 4px 2px #E65C00;
     }
     50%{
         transform: rotate(180deg);
-        box-shadow: 1px 5px 2px #18B201;
+        box-shadow: 1px 4px 2px #18B201;
     }
     100%{
         transform: rotate(360deg);
-        box-shadow: 1px 5px 2px #E65C00;
+        box-shadow: 1px 4px 2px #E65C00;
     }
 }

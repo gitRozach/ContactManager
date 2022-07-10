@@ -14,6 +14,7 @@ import { TeamSortPipe } from './pipes/team-sort.pipe';
 import { ContactSearchPipe } from './pipes/contact-search.pipe';
 import { TeamFilterPipe } from './pipes/team-filter.pipe';
 import { LoadingLayerComponent } from './loading-layer/loading-layer.component';
+import { TeamExcludePipe } from './pipes/team-exclude.pipe';
 
 
 @NgModule({
@@ -30,6 +31,8 @@ import { LoadingLayerComponent } from './loading-layer/loading-layer.component';
     ContactSearchPipe,
     TeamFilterPipe,
     LoadingLayerComponent,
+    TeamExcludePipe,
+    
   ],
   imports: [
     BrowserModule,
