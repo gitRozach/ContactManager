@@ -10,10 +10,6 @@
     transition: all .5s ease;
 }
 
-.card:hover {
-    filter: drop-shadow(0 0 8px #007bff);
-}
-
 .card-title{
     color: #e4e4e4;
     font-weight: 600;

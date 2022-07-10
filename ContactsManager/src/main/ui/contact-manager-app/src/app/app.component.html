@@ -10,6 +10,7 @@
 
   <div class="cardRootContainer">
     <app-contact-card *ngFor="let contact of contacts | teamFilter:this.selectedTeam ?? '' | contactSearch:this.searchText:this.searchCounter | contactSort:'ASC'"
+      [ngClass]="{'selected-card': contact.id === this.selectedContact?.id}"
       [contact]="contact"
       (selectedContactChanged)="onSelectedContactChanged($event)"
       (contactToEditChanged)="onContactToEditChanged($event)"

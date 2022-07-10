@@ -18,6 +18,10 @@
     width: 0px;
 }
 
+.selected-card {
+    filter: drop-shadow(0 0 8px #007bff);
+}
+
 @media screen and (max-width: 2500px) {
     .cardRootContainer {
         display: grid;
