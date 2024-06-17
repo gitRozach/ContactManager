@@ -97,7 +97,5 @@ public class Contact implements Serializable {
         return this.contactCode;
     }
 
-    public void setContactCode(String contactCode) {
-        this.contactCode = contactCode;
-    }
+    public void setContactCode(String contactCode) {this.contactCode = contactCode;}
 }

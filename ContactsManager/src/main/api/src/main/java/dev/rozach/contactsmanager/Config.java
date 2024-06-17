@@ -1,6 +1,6 @@
 package dev.rozach.contactsmanager;
 
-public class Settings {
+public class Config {
     public static final int MAX_NAME_LENGTH = 48;
     public static final int MAX_TEAM_LENGTH = 48;
     public static final int MAX_TITLE_LENGTH = 48;

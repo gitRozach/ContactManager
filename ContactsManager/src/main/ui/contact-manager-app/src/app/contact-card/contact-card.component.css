@@ -8,6 +8,7 @@
     color: #d4d3d3;
     border: 0px solid gray;
     transition: all .5s ease;
+    cursor: pointer;
 }
 
 .card-title{

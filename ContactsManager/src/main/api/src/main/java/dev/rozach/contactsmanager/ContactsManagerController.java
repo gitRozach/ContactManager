@@ -4,10 +4,11 @@ import dev.rozach.contactsmanager.model.Contact;
 import dev.rozach.contactsmanager.service.ContactService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -15,54 +16,51 @@ import java.util.stream.Collectors;
 public class ContactsManagerController {
     private final ContactService contactService;
 
-    public static final int MAX_NAME_LENGTH = 48;
-    public static final int MAX_TEAM_LENGTH = 48;
-    public static final int MAX_TITLE_LENGTH = 48;
-    public static final int MAX_EMAIL_LENGTH = 48;
-    public static final int MAX_PHONE_NUMBER_LENGTH = 48;
-    public static final int MAX_IMAGE_URL_LENGTH = 100;
-
     public ContactsManagerController(ContactService contactService) {
         this.contactService = contactService;
     }
-
-
     private String capitalize(String value) {
         return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
     }
     public String tryToFormatName(String name) {
         if (name == null || name.trim().length() < 2) return null;
-        return Arrays.stream(name.length() > MAX_NAME_LENGTH ? name.substring(0, MAX_NAME_LENGTH).split(" ") : name.split(" "))
+        return Arrays.stream(name.length() > Config.MAX_NAME_LENGTH ? name.substring(0, Config.MAX_NAME_LENGTH).split(" ") : name.split(" "))
                 .map(value -> this.capitalize(value) + " ")
                 .collect(Collectors.joining()).trim();
     }
 
     public String tryToFormatTeam(String team) {
         if (team == null || team.length() < 1) return null;
-        return this.capitalize(team.length() > MAX_TEAM_LENGTH ? team.substring(0, MAX_TEAM_LENGTH) : team);
+        return this.capitalize(team.length() > Config.MAX_TEAM_LENGTH ? team.substring(0, Config.MAX_TEAM_LENGTH) : team);
     }
 
     public String tryToFormatTitle(String title) {
         if (title == null || title.length() < 1) return null;
-        return this.capitalize(title.length() > MAX_TITLE_LENGTH ? title.substring(0, MAX_TITLE_LENGTH) : title);
+        return this.capitalize(title.length() > Config.MAX_TITLE_LENGTH ? title.substring(0, Config.MAX_TITLE_LENGTH) : title);
     }
 
     public String tryToFormatEmail(String email) {
         if (email == null || email.length() < 1) return null;
         // TODO EMAIL Pattern pruefen
-        return email.length() > MAX_EMAIL_LENGTH ? email.substring(0, MAX_EMAIL_LENGTH) : email;
+        return email.length() > Config.MAX_EMAIL_LENGTH ? email.substring(0, Config.MAX_EMAIL_LENGTH) : email;
     }
 
     public String tryToFormatPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.length() < 3) return null;
         // TODO Ziffern kontrollieren
-        return phoneNumber.length() > MAX_PHONE_NUMBER_LENGTH ? phoneNumber.substring(0, MAX_PHONE_NUMBER_LENGTH) : phoneNumber;
+        return phoneNumber.length() > Config.MAX_PHONE_NUMBER_LENGTH ? phoneNumber.substring(0, Config.MAX_PHONE_NUMBER_LENGTH) : phoneNumber;
     }
 
     public String tryToFormatImageURL(String imageURL) {
         if (imageURL == null || imageURL.length() < 3) return null;
         // TODO Ziffern kontrollieren
-        return imageURL.length() > MAX_IMAGE_URL_LENGTH ? imageURL.substring(0, MAX_IMAGE_URL_LENGTH) : imageURL;
+        return imageURL.length() > Config.MAX_IMAGE_URL_LENGTH ? imageURL.substring(0, Config.MAX_IMAGE_URL_LENGTH) : imageURL;
+    }
+
+    @RequestMapping("/")
+    public ResponseEntity<String> test() {
+        System.out.println("Hey hey");
+        return new ResponseEntity<>("xd", HttpStatus.OK);
     }
 
     @GetMapping("/all")
