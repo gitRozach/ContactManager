@@ -76,8 +76,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (this.selectedContactIndex + 1 >= this.contacts.length) return;
       const targetIndex = this.selectedContactIndex + 1;
       this.selectedContactIndex = targetIndex;
-      this.selectedContact = this.contacts[targetIndex];
-      console.log(targetIndex);
+      this.onSelectedContactChanged(this.contacts[targetIndex]);
     }
   }
 
@@ -92,8 +91,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (this.selectedContactIndex - this.contactsPerRow < 0) return;
       const targetIndex = this.selectedContactIndex - this.contactsPerRow;
       this.selectedContactIndex = targetIndex;
-      this.selectedContact = this.contacts[targetIndex];
-      console.log(targetIndex);
+      this.onSelectedContactChanged(this.contacts[targetIndex]);
     }
   }
 
@@ -112,8 +110,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         return;
       const targetIndex = this.selectedContactIndex + this.contactsPerRow;
       this.selectedContactIndex = targetIndex;
-      this.selectedContact = this.contacts[targetIndex];
-      console.log(targetIndex);
+      this.onSelectedContactChanged(this.contacts[targetIndex]);
     }
   }
 

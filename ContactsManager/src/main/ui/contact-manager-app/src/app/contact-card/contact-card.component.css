@@ -1,22 +1,63 @@
 .controls {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .card {
-    background: rgb(61, 61, 61);
-    color: #d4d3d3;
-    border: 0px solid gray;
-    transition: all .5s ease;
-    cursor: pointer;
+  background: rgb(61, 61, 61);
+  color: #d4d3d3;
+  border: 0px solid gray;
+  transition: all 0.5s ease;
+  cursor: pointer;
 }
 
-.card-title{
-    color: #e4e4e4;
-    font-weight: 600;
+.card-title {
+  color: #e4e4e4;
+  font-weight: 600;
 }
 
 .card-text {
-    color: #cecece;
-    font-weight: 400;
+  color: #cecece;
+  font-weight: 400;
+}
+
+.flip-card-container {
+  width: 350px;
+  height: 500px;
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.flip-card-container:hover > .flip-card {
+  transform: rotateY(180deg);
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.33s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  position: absolute;
+  backface-visibility: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-card-front {
+  background: rgb(235, 235, 235);
+}
+
+.flip-card-back {
+  background: rgb(61, 61, 61);
+  transform: rotateY(180deg);
 }
