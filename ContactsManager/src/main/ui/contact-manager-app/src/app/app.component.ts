@@ -16,22 +16,105 @@ import { ContactService } from "./service/contact.service";
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  screenWidth: number = -1;
+  contactsPerRow: number = -1;
   loading: boolean = true;
   title: string = "Contact Manager";
   contacts: Contact[] = [];
   contactToEdit: Contact | undefined = undefined;
   contactToDelete: Contact | undefined = undefined;
   selectedContact: Contact | undefined = undefined;
+  selectedContactIndex: number = -1;
   teams: string[] = [];
   selectedTeam: string | undefined;
   searchText: string = "";
   searchCounter: { count: number } = { count: 0 };
 
-  constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService) {
+    this.onResize();
+  }
 
-  @HostListener("document:keydown.esc", ["$event"])
-  onKeydownHandler(_: KeyboardEvent) {
-    this.onSelectedContactChanged(undefined);
+  @HostListener("window:resize", ["$event"])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 750) {
+      this.contactsPerRow = 1;
+    } else if (this.screenWidth <= 1400) {
+      this.contactsPerRow = 2;
+    } else {
+      this.contactsPerRow = 4;
+    }
+  }
+
+  @HostListener("document:keyup.esc", ["$event"])
+  onEscapeKey(_: KeyboardEvent) {
+    //this.onSelectedContactChanged(undefined);
+    console.log("ESCAPE PRESSED");
+  }
+
+  @HostListener("document:keyup.arrowleft", ["$event"])
+  onArrowLeftKey(_: KeyboardEvent) {
+    if (this.selectedContact) {
+      if (this.selectedContactIndex === -1) {
+        this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
+      }
+      if (this.selectedContactIndex - 1 < 0) return;
+      const targetIndex = this.selectedContactIndex - 1;
+      this.selectedContactIndex = targetIndex;
+      this.onSelectedContactChanged(this.contacts[targetIndex]);
+    }
+  }
+
+  @HostListener("document:keyup.arrowright", ["$event"])
+  onArrowRightKey(_: KeyboardEvent) {
+    //this.onSelectedContactChanged(undefined);
+    console.log("ARROW RIGHT PRESSED");
+    if (this.selectedContact) {
+      if (this.selectedContactIndex === -1) {
+        this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
+      }
+      if (this.selectedContactIndex + 1 >= this.contacts.length) return;
+      const targetIndex = this.selectedContactIndex + 1;
+      this.selectedContactIndex = targetIndex;
+      this.selectedContact = this.contacts[targetIndex];
+      console.log(targetIndex);
+    }
+  }
+
+  @HostListener("document:keyup.arrowup", ["$event"])
+  onArrowUpKey(_: KeyboardEvent) {
+    //this.onSelectedContactChanged(undefined);
+    console.log("ARROW UP PRESSED");
+    if (this.selectedContact) {
+      if (this.selectedContactIndex === -1) {
+        this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
+      }
+      if (this.selectedContactIndex - this.contactsPerRow < 0) return;
+      const targetIndex = this.selectedContactIndex - this.contactsPerRow;
+      this.selectedContactIndex = targetIndex;
+      this.selectedContact = this.contacts[targetIndex];
+      console.log(targetIndex);
+    }
+  }
+
+  @HostListener("document:keyup.arrowdown", ["$event"])
+  onArrowDownKey(_: KeyboardEvent) {
+    //this.onSelectedContactChanged(undefined);
+    console.log("ARROW DOWN PRESSED");
+    if (this.selectedContact) {
+      if (this.selectedContactIndex === -1) {
+        this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
+      }
+      if (
+        this.selectedContactIndex + this.contactsPerRow >=
+        this.contacts.length
+      )
+        return;
+      const targetIndex = this.selectedContactIndex + this.contactsPerRow;
+      this.selectedContactIndex = targetIndex;
+      this.selectedContact = this.contacts[targetIndex];
+      console.log(targetIndex);
+    }
   }
 
   ngOnInit(): void {
@@ -121,23 +204,27 @@ export class AppComponent implements OnInit, AfterViewInit {
   public onSearchTextChanged(searchValue: string): void {
     if (this.searchText === searchValue) return;
     this.searchText = searchValue;
+    this.selectedContact = undefined;
   }
 
   public onTeamSelectionChanged(selectedTeam: string | undefined): void {
     if (this.selectedTeam === selectedTeam) return;
     this.selectedTeam = selectedTeam;
+    this.selectedContact = undefined;
     console.log("Selected Team: ", this.selectedTeam);
   }
 
   public onContactToEditChanged(contact: Contact): void {
     if (this.contactToEdit === contact) return;
     this.contactToEdit = contact;
+    this.selectedContact = contact;
     console.log("Contact to edit: ", this.contactToEdit?.id);
   }
 
   public onContactToDeleteChanged(contact: Contact): void {
     if (this.contactToDelete === contact) return;
     this.contactToDelete = contact;
+    this.selectedContact = contact;
     console.log("Contact to delete: ", this.contactToDelete?.id);
   }
 
