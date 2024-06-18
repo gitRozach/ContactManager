@@ -17,6 +17,9 @@ import { ContactService } from "./service/contact.service";
 })
 export class AppComponent implements OnInit, AfterViewInit {
   screenWidth: number = -1;
+  screenWidthSmallMax: number = 750;
+  screenWidthMediumMax: number = 1400;
+  screenWidthLargeMax: number = 2500;
   contactsPerRow: number = -1;
   loading: boolean = true;
   title: string = "Contact Manager";
@@ -37,13 +40,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 750) {
-      this.contactsPerRow = 1;
-    } else if (this.screenWidth <= 1400) {
-      this.contactsPerRow = 2;
-    } else {
-      this.contactsPerRow = 4;
-    }
+    this.contactsPerRow = this.evaluateContactsPerRowForScreenWidth(
+      this.screenWidth
+    );
   }
 
   @HostListener("document:keyup.esc", ["$event"])
@@ -52,66 +51,55 @@ export class AppComponent implements OnInit, AfterViewInit {
     console.log("ESCAPE PRESSED");
   }
 
-  @HostListener("document:keyup.arrowleft", ["$event"])
-  onArrowLeftKey(_: KeyboardEvent) {
+  private evaluateContactsPerRowForScreenWidth(width: number) {
+    if (this.screenWidth <= this.screenWidthSmallMax) return 1;
+    if (this.screenWidth <= this.screenWidthMediumMax) return 2;
+    if (this.screenWidth <= this.screenWidthLargeMax) return 4;
+    return 4;
+  }
+
+  private selectContactAtIndex(index: number) {
+    if (index >= 0 && index < this.contacts.length) {
+      this.selectedContactIndex = index;
+      this.onSelectedContactChanged(this.contacts[index]);
+    }
+  }
+
+  private evaluateSelectedContactTargetIndex(offset: number) {
     if (this.selectedContact) {
       if (this.selectedContactIndex === -1) {
         this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
       }
-      if (this.selectedContactIndex - 1 < 0) return;
-      const targetIndex = this.selectedContactIndex - 1;
-      this.selectedContactIndex = targetIndex;
-      this.onSelectedContactChanged(this.contacts[targetIndex]);
+      return this.selectedContactIndex + offset;
+    } else if (this.selectedContactIndex !== -1) {
+      return this.selectedContactIndex;
+    } else {
+      return 0;
     }
+  }
+
+  @HostListener("document:keyup.arrowleft", ["$event"])
+  onArrowLeftKey(_: KeyboardEvent) {
+    this.selectContactAtIndex(this.evaluateSelectedContactTargetIndex(-1));
   }
 
   @HostListener("document:keyup.arrowright", ["$event"])
   onArrowRightKey(_: KeyboardEvent) {
-    //this.onSelectedContactChanged(undefined);
-    console.log("ARROW RIGHT PRESSED");
-    if (this.selectedContact) {
-      if (this.selectedContactIndex === -1) {
-        this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
-      }
-      if (this.selectedContactIndex + 1 >= this.contacts.length) return;
-      const targetIndex = this.selectedContactIndex + 1;
-      this.selectedContactIndex = targetIndex;
-      this.onSelectedContactChanged(this.contacts[targetIndex]);
-    }
+    this.selectContactAtIndex(this.evaluateSelectedContactTargetIndex(1));
   }
 
   @HostListener("document:keyup.arrowup", ["$event"])
   onArrowUpKey(_: KeyboardEvent) {
-    //this.onSelectedContactChanged(undefined);
-    console.log("ARROW UP PRESSED");
-    if (this.selectedContact) {
-      if (this.selectedContactIndex === -1) {
-        this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
-      }
-      if (this.selectedContactIndex - this.contactsPerRow < 0) return;
-      const targetIndex = this.selectedContactIndex - this.contactsPerRow;
-      this.selectedContactIndex = targetIndex;
-      this.onSelectedContactChanged(this.contacts[targetIndex]);
-    }
+    this.selectContactAtIndex(
+      this.evaluateSelectedContactTargetIndex(-this.contactsPerRow)
+    );
   }
 
   @HostListener("document:keyup.arrowdown", ["$event"])
   onArrowDownKey(_: KeyboardEvent) {
-    //this.onSelectedContactChanged(undefined);
-    console.log("ARROW DOWN PRESSED");
-    if (this.selectedContact) {
-      if (this.selectedContactIndex === -1) {
-        this.selectedContactIndex = this.contacts.indexOf(this.selectedContact);
-      }
-      if (
-        this.selectedContactIndex + this.contactsPerRow >=
-        this.contacts.length
-      )
-        return;
-      const targetIndex = this.selectedContactIndex + this.contactsPerRow;
-      this.selectedContactIndex = targetIndex;
-      this.onSelectedContactChanged(this.contacts[targetIndex]);
-    }
+    this.selectContactAtIndex(
+      this.evaluateSelectedContactTargetIndex(this.contactsPerRow)
+    );
   }
 
   ngOnInit(): void {
@@ -131,7 +119,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public addContact(addContactForm: NgForm): void {
     if (!addContactForm) {
       console.log(
-        "Could add a new Contact, because its value is:",
+        "Could not add a new Contact, because its value is:",
         addContactForm
       );
       return;
@@ -155,7 +143,6 @@ export class AppComponent implements OnInit, AfterViewInit {
           console.log(error);
         }
       );
-    console.log("Added new Contact:", addContactForm);
   }
 
   public editContact(editContactForm: NgForm): void {
@@ -175,13 +162,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.contactToEdit = undefined;
       }
       this.pullContacts();
-      console.log("Edited Contact:", editContactForm);
     });
   }
 
   public removeContactToDelete(value: boolean): void {
     if (value && this.contactToDelete) {
-      console.log("Trying to delete ID: ", this.contactToDelete?.id);
       this.removeContact(this.contactToDelete);
     }
   }
@@ -193,7 +178,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (contact === this.contactToDelete) {
         this.contactToDelete = undefined;
       }
-      this.selectedContact = undefined;
+      this.onSelectedContactChanged(undefined);
       this.pullContacts();
     });
   }
@@ -201,28 +186,23 @@ export class AppComponent implements OnInit, AfterViewInit {
   public onSearchTextChanged(searchValue: string): void {
     if (this.searchText === searchValue) return;
     this.searchText = searchValue;
-    this.selectedContact = undefined;
+    this.onSelectedContactChanged(undefined);
   }
 
   public onTeamSelectionChanged(selectedTeam: string | undefined): void {
     if (this.selectedTeam === selectedTeam) return;
     this.selectedTeam = selectedTeam;
-    this.selectedContact = undefined;
-    console.log("Selected Team: ", this.selectedTeam);
+    this.onSelectedContactChanged(undefined);
   }
 
   public onContactToEditChanged(contact: Contact): void {
     if (this.contactToEdit === contact) return;
-    this.contactToEdit = contact;
-    this.selectedContact = contact;
-    console.log("Contact to edit: ", this.contactToEdit?.id);
+    this.onSelectedContactChanged(contact);
   }
 
   public onContactToDeleteChanged(contact: Contact): void {
     if (this.contactToDelete === contact) return;
-    this.contactToDelete = contact;
-    this.selectedContact = contact;
-    console.log("Contact to delete: ", this.contactToDelete?.id);
+    this.onSelectedContactChanged(contact);
   }
 
   public onSelectedContactChanged(contact: Contact | undefined): void {
@@ -230,7 +210,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.selectedContact = undefined;
       this.contactToEdit = undefined;
       this.contactToDelete = undefined;
-      console.log("Contact selection reset.");
       return;
     }
     this.selectedContact = contact;
